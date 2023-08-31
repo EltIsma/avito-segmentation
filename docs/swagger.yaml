@@ -1,0 +1,105 @@
+basePath: /
+definitions:
+  apperror.AppError:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+  segment.SegmentDTO:
+    properties:
+      segment_name:
+        type: string
+    type: object
+  user.ReportSegmentRequest:
+    properties:
+      period:
+        type: string
+    type: object
+host: localhost:8000
+info:
+  contact: {}
+  description: API Server for segment distribution
+  title: AvitoTech
+  version: "1.0"
+paths:
+  /segments/:
+    delete:
+      consumes:
+      - application/json
+      description: delete segment
+      operationId: delete-segment
+      parameters:
+      - description: segment info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/segment.SegmentDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: bool
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apperror.AppError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apperror.AppError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apperror.AppError'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/apperror.AppError'
+      summary: SegmentOperation
+      tags:
+      - segment
+  /users/reports:
+    post:
+      consumes:
+      - application/json
+      description: get_report_url
+      operationId: get-url
+      parameters:
+      - description: period info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/user.ReportSegmentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: URL
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apperror.AppError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/apperror.AppError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apperror.AppError'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/apperror.AppError'
+      summary: ReportFile
+      tags:
+      - users
+swagger: "2.0"
